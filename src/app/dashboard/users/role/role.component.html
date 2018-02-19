@@ -1,0 +1,63 @@
+<div class="row m-1">
+    <div class="col-12 col-md-6 p-0">
+        <form [formGroup]="roleForm" (ngSubmit)="addRole()" novalidate class="raised">
+            <mat-form-field class="col-12" >
+                <!-- <mat-icon matPrefix fontSet="fa" fontIcon="fa-user"></mat-icon> -->
+                <input matInput placeholder="Name" [(ngModel)]="role.name" formControlName="name">
+                <mat-error *ngIf="roleForm.controls.name.invalid && roleForm.controls.name.touched">Name Required</mat-error>
+            </mat-form-field>
+            <button  class="col-12" type="submit" mat-raised-button color="primary" disabled="{{roleForm.invalid}}"><i class="fa fa-plus"></i>Save</button>
+        </form>
+    </div>
+    <div class="col-12 col-md-6 p-0">
+        <div class="raised mx-md-3 px-md-3">
+            <table class="table table-srtiped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th >Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let role of roles">
+                        <td>{{role.name}}</td>
+                        <td>
+                            <a mat-raised-button color="accent" 
+                            (click)="editRole(role.id)">
+                                <i class="fa fa-pencil-square-o"></i> Edit
+                            </a> 
+                            <a mat-raised-button color="warn" 
+                                (click)="deleteRole(role.id)">
+                                <i class="fa fa-pencil-square-o"></i> Delete
+                            </a> 
+                        </td>
+                    </tr>
+                    <tr *ngFor="let i of arr(10 - page?.numberOfElements)" >
+                        <td colspan="2">
+                            <a mat-button>
+                                &nbsp;
+                            </a> 
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2">
+                            <div aria-label="Page navigation example">
+                                <ul class="pagination justify-content-end">
+                                    <li class="page-item" [ngClass]="{'disabled': page?.first}" ><a class="page-link" [routerLink] (click)="getRolePage(0)" > First </a></li>
+                                    <li class="page-item" [ngClass]="{'disabled': page?.number == 0}" ><a class="page-link" [routerLink] (click)="getRolePage(page?.number-1)" > Previous </a></li>
+        
+                                    <li class="page-item"><a class="page-link" > {{page?.number+1}} / {{page?.totalPages}} </a></li>
+        
+                                    <li class="page-item" [ngClass]="{'disabled': page?.last}"><a class="page-link" [routerLink] (click)="getRolePage(page?.number+1)"> Next </a></li>
+                                    <li class="page-item" [ngClass]="{'disabled': page?.last}"><a class="page-link" [routerLink] (click)="getRolePage(page?.totalPages-1)"> Last </a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>

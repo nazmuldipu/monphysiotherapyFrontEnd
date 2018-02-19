@@ -1,0 +1,53 @@
+<div class="app-login">
+  <div class="login-box">
+    
+
+    <div class="offset-md-4 col-md-4 p-0 login-form raised">
+      <div class="card p-0">
+        <div class="logo text-center pt-2">
+          <h2><b>মন</b> ফিজিওথেরাপি</h2>
+        </div>      
+              
+        <div class="card-body">
+          <div class="text-center">
+            Please insert your login information
+          </div>
+          
+          <form [formGroup]="registerForm" (ngSubmit)="register()" novalidate>
+            <mat-form-field>
+                <mat-icon matPrefix fontSet="fa" fontIcon="fa-user"></mat-icon>
+                <input matInput placeholder="Name" [(ngModel)]="user.name" formControlName="name">
+                <mat-error *ngIf="registerForm.controls.name.invalid && registerForm.controls.name.touched">Invalid Name</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-icon matPrefix fontSet="fa" fontIcon="fa-at"></mat-icon>
+                <input matInput placeholder="Email" [(ngModel)]="user.email" formControlName="email">
+                <mat-error *ngIf="registerForm.controls.email.invalid && registerForm.controls.email.touched">Invalid Email</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-icon matPrefix fontSet="fa" fontIcon="fa-unlock"></mat-icon>
+                <input matInput placeholder="Password" [(ngModel)]="user.password" formControlName="password" [type]="hide ? 'password' : 'text'">
+                <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+                <mat-error *ngIf="registerForm.controls.password.invalid && registerForm.controls.password.touched">Invalid password touched</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-icon matPrefix fontSet="fa" fontIcon="fa-unlock-alt"></mat-icon>
+                <input matInput placeholder="Confirm password" formControlName="confirmPassword" type="password">
+                <mat-icon matSuffix *ngIf="registerForm.controls.password.value === registerForm.controls.confirmPassword.value && registerForm.controls.password.touched">done</mat-icon>
+                <mat-error *ngIf="registerForm.controls.confirmPassword.invalid && registerForm.controls.confirmPassword.touched">Invalid password touched</mat-error>
+                <mat-error *ngIf="registerForm.controls.password.value === registerForm.controls.confirmPassword.value && registerForm.controls.password.touched">Please enter the same value again</mat-error>
+            </mat-form-field>
+            <mat-checkbox formControlName="terms">I read and agree to the  terms of usage</mat-checkbox>
+            <button class="btn-block" type="submit" mat-raised-button color="primary" disabled="{{registerForm.invalid}}">Submit</button>
+            <div class="text-center mt-2">
+              <a routerLink="/login" class="align-center">You already have a membership?</a>
+            </div>
+            
+          </form>
+          
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</div>

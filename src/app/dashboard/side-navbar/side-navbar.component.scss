@@ -1,0 +1,80 @@
+@import '../../../assets/styles.scss';
+
+.side-nav-offset{
+    width: 300px;
+    overflow-y: auto;
+}
+.sidebar {
+    position: fixed;
+    top: 54px;
+    bottom: 0;
+    left: 0;
+    z-index: 100; /* Behind the navbar */
+    padding: 0;
+    // box-shadow: inset -1px 0 0 rgba(218, 113, 113, 0.1);
+}
+  
+ul li{
+    cursor:pointer;
+}
+.active{
+  color: black;
+  font-weight: 600;
+}
+.active ul{
+  display:block !important;
+  color: black;
+  font-weight: 300;
+}
+.list-group{
+    background-color: white;
+}
+.list-group a, .second-list-group a{
+    color: black;
+    text-decoration: none;
+}
+
+.second-list-group{
+    background: transparent; 
+}
+
+.list-group a:hover, .second-list-group a:hover{
+    font-weight: 600;
+    background: linear-gradient(to right, transparent, rgba(00, 128, 128, 0.4)); 
+}
+.list-group a:active{
+    background-color: blue;
+}
+
+.nav-group-item {
+    position: relative;
+    display: block;
+    padding: 0.6rem 1rem;
+    margin-bottom: -1px;
+    /* background-color: #fff; */
+    // border: 1px solid rgba(0,0,0,.125);
+}
+.nav-group-item.first:hover{
+    // font-weight: 600;
+    // background-color: aqua;
+    background: linear-gradient(to left,white , $accent-color);
+    color: white;
+}
+
+.nav-group-item.active  {
+    background-color: transparent;
+    /* border-color: #007bff; */
+}
+
+.profile{
+    height: 135px;
+    color: $text-primary-color;
+    background-color: $default-primary-color;
+}
+
+.profile-pic .mat-icon{
+    text-align: center;
+    font-size: 50px;
+    height: 50px;
+    width: 50px;
+}

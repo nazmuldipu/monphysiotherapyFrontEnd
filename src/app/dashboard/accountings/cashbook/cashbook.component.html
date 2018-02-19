@@ -1,0 +1,50 @@
+
+<div class="container">
+    <div class="col-12 col-md-6 mt-1">
+        <div class="container raised ">
+            <h4 class="text-center">Cash Book</h4>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Explanation#</th>
+                        <th>Debit</th>
+                        <th>credit</th>
+                        <th>balance</th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="cashbooks.length > 0">
+                    <tr *ngFor="let cashbook of cashbooks">
+                        <td>{{cashbook?.date | date:'dd-MM-yyyy'}}</td>
+                        <td>{{cashbook?.explanation}}</td>
+                        <td>{{cashbook?.debit}}</td>
+                        <td>{{cashbook?.credit}}</td>
+                        <td>{{cashbook?.balance}}</td>
+                    </tr>
+                    <tr *ngFor="let i of arr(page?.size - page?.numberOfElements)" >
+                        <td colspan="5">
+                            &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="5">
+                        <div aria-label="Page navigation example">
+                            <ul class="pagination justify-content-end">
+                            <li class="page-item" [ngClass]="{'disabled': page?.first}" ><a class="page-link" [routerLink] (click)="getCashbookPage(0)" > First </a></li>
+                            <li class="page-item" [ngClass]="{'disabled': page?.number == 0}" ><a class="page-link" [routerLink] (click)="getCashbookPage(page?.number-1)" > Previous </a></li>
+            
+                            <li class="page-item"><a class="page-link" > {{page?.number+1}} / {{page?.totalPages}} </a></li>
+            
+                            <li class="page-item" [ngClass]="{'disabled': page?.last}"><a class="page-link" [routerLink] (click)="getCashbookPage(page?.number+1)"> Next </a></li>
+                            <li class="page-item" [ngClass]="{'disabled': page?.last}"><a class="page-link" [routerLink] (click)="getCashbookPage(page?.totalPages-1)"> Last </a></li>
+                            </ul>
+                        </div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>

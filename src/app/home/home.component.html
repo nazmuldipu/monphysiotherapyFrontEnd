@@ -1,0 +1,16 @@
+<h1>Home</h1>
+<button class="btn btn-outline-primary my-2 my-sm-0 " routerLink="/dashboard">Dashboard</button>
+<button class="btn btn-outline-primary my-2 my-sm-0 " routerLink="/login">Login</button>
+<button class="btn btn-outline-primary ml-1 my-2 my-sm-0 " routerLink="/register">Register</button>
+
+
+<div class="col-md-4 offset-md-4">
+    <form [formGroup]="serverIpForm" (ngSubmit)="getIpAddress()">
+        <div class="form-group">
+            <label for="exampleInputEmail1">Set your server ip</label>
+            <input class="form-control" formControlName="serverIp" placeholder="Enter your server ip address">
+            <small id="emailHelp" class="form-text text-muted">Your server ip will be reserved only on your device</small>
+        </div>
+        <button type="submit" class="btn btn-primary" [ngClass]="{'disabled': serverIpForm.invalid }" >Submit</button>
+    </form>
+</div>

@@ -1,0 +1,144 @@
+<div class="container mt-2 raised">
+    <h3 class="text-center">{{patient?.name}}</h3>
+    <div class="row lead">
+        <div class="col-12 col-md-6">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td class="text-right secondary-text-color">Name:</td>
+                        <td>{{patient?.name}}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right secondary-text-color">Phone:</td>
+                        <td>{{patient?.phone}}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right secondary-text-color">Age:</td>
+                        <td>{{patient?.age}}</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+        <div class="col-12 col-md-6">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td class="text-right secondary-text-color">Cheif complain:</td>
+                            <td>{{patient?.chiefComplain}}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right secondary-text-color">Past history:</td>
+                            <td>{{patient?.pastHistory}}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right secondary-text-color">Medical history:</td>
+                            <td>{{patient?.pastMedicalHistory}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+    </div>
+</div>
+<div class="container mt-2 raised">
+    <div class="row lead">
+        <a class="btn btn-secondary m-1" routerLink="/dashboard/patients/list"><i class="fa fa-undo"></i>Patient list</a>
+        <a class="btn btn-info m-1" routerLink="/dashboard/sessions/add/add/{{patient?.id}}"><i class="fa fa-plus"></i>Session</a>
+        <a class="btn btn-info m-1" routerLink="/dashboard/accountings/sessionFee"><i class="fa fa-money"></i>Collect</a>
+    </div>
+</div>    
+<div class="row mt-2">
+    <div class="col-12 col-md-6 mt-1">
+        <div class="container raised ">
+            <h4 class="text-center">{{patient?.name}} Sessions</h4>
+            <table class="table">
+                <thead>
+                    <tr>
+                    <th>Date</th>
+                    <th>Session#</th>
+                    <th>Treatments</th>
+                    <th>SessionFee</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let session of sessions">
+                    <td>{{session?.date | date:'dd-MM-yyyy'}}</td>
+                    <td>{{session?.sessionNumber}}</td>
+                    <td>{{session?.treatments}}</td>
+                    <td>{{session?.sessionFee}}</td>
+                    </tr>
+                    <tr *ngFor="let i of arr(10 - sessions?.length)" >
+                        <td colspan="4">
+                            &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                    <td colspan="3">
+                        <div aria-label="Page navigation example">
+                        <ul class="pagination justify-content-end">
+                            <li class="page-item" [ngClass]="{'disabled': sessionPage?.first}" ><a class="page-link" [routerLink] (click)="getPatientSessions(0)" > First </a></li>
+                            <li class="page-item" [ngClass]="{'disabled': sessionPage?.number == 0}" ><a class="page-link" [routerLink] (click)="getPatientSessions(sessionPage?.number-1)" > Previous </a></li>
+        
+                            <li class="page-item"><a class="page-link" > {{sessionPage?.number+1}} / {{sessionPage?.totalPages}} </a></li>
+        
+                            <li class="page-item" [ngClass]="{'disabled': sessionPage?.last}"><a class="page-link" [routerLink] (click)="getPatientSessions(sessionPage?.number+1)"> Next </a></li>
+                            <li class="page-item" [ngClass]="{'disabled': sessionPage?.last}"><a class="page-link" [routerLink] (click)="getPatientSessions(sessionPage?.totalPages-1)"> Last </a></li>
+                        </ul>
+                        </div>
+                    </td>
+                    </tr>
+                </tfoot>
+                </table>
+        </div>
+    </div>
+    
+    <div class="col-12 col-md-6 mt-1">
+        <div class="container raised ">
+            <h4 class="text-center">{{patient?.name}} Ledger</h4>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Explanation#</th>
+                        <th>Debit</th>
+                        <th>credit</th>
+                        <th>balance</th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="pLedgers.length > 0">
+                    <tr *ngFor="let pLedger of pLedgers">
+                        <td>{{pLedger?.date | date:'dd-MM-yyyy'}}</td>
+                        <td>{{pLedger?.explanation}}</td>
+                        <td>{{pLedger?.debit}}</td>
+                        <td>{{pLedger?.credit}}</td>
+                        <td>{{pLedger?.balance}}</td>
+                    </tr>
+                    <tr *ngFor="let i of arr(pLedgerPage?.size - pLedgerPage?.numberOfElements)" >
+                        <td colspan="5">
+                            &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="5">
+                        <div aria-label="Page navigation example">
+                            <ul class="pagination justify-content-end">
+                            <li class="page-item" [ngClass]="{'disabled': pLedgerPage?.first}" ><a class="page-link" [routerLink] (click)="getPatientLedger(0)" > First </a></li>
+                            <li class="page-item" [ngClass]="{'disabled': pLedgerPage?.number == 0}" ><a class="page-link" [routerLink] (click)="getPatientLedger(pLedgerPage?.number-1)" > Previous </a></li>
+            
+                            <li class="page-item"><a class="page-link" > {{pLedgerPage?.number+1}} / {{pLedgerPage?.totalPages}} </a></li>
+            
+                            <li class="page-item" [ngClass]="{'disabled': pLedgerPage?.last}"><a class="page-link" [routerLink] (click)="getPatientLedger(pLedgerPage?.number+1)"> Next </a></li>
+                            <li class="page-item" [ngClass]="{'disabled': pLedgerPage?.last}"><a class="page-link" [routerLink] (click)="getPatientLedger(pLedgerPage?.totalPages-1)"> Last </a></li>
+                            </ul>
+                        </div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>      

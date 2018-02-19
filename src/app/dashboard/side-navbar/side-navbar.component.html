@@ -1,0 +1,68 @@
+<nav class="side-nav-offset bg-light sidebar raised" [ngbCollapse]="navCollaps" id="sideNav">
+    <div class="profile">
+        <div class="row m-0">
+            <div class="profile-pic m-2 ">
+                <mat-icon matPrefix fontSet="fa" fontIcon="fa-user-circle-o"></mat-icon>
+            </div>
+        </div>
+        <div class="m-2" *ngIf="!isAuthenticated">
+            <button class="btn btn-outline-primary my-2 my-sm-0 text-primary-color" routerLink="/login">Login</button>
+            <button class="btn btn-outline-primary ml-1 my-2 my-sm-0 text-primary-color" routerLink="/register">Register</button>
+        </div>
+        <div class="m-2" *ngIf="isAuthenticated">
+            <div>{{user.name}}</div>
+            <div class="d-flex justify-content-between">
+                <div>{{user.email}}</div>
+                <div class="nav-item dropdown" placement="bottom-right" ngbDropdown >
+                    <a class="nav-link dropdown-toggle" id="dropdown01" ngbDropdownToggle ></a>
+                    <div class="dropdown-menu" ngbDropdownMenu aria-labelledby="dropdown01">
+                        <a class="dropdown-item" routerLink="/dashboard/users/changePassword"><i class="fa fa-unlock-alt"></i> Change Password</a>
+                        <a class="dropdown-item" routerLink (click)="logout()"> <i class="fa fa-sign-out"></i> Logout</a>
+                    </div>
+                </div>
+                <!-- <div ngbDropdown class="d-inline-block">
+                    <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle></button>
+                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                        <button class="dropdown-item">Action - 1</button>
+                        <button class="dropdown-item">Another Action</button>
+                        <button class="dropdown-item">Something else is here</button>
+                    </div>
+                </div> -->
+            </div>
+            
+        </div>
+    </div>
+
+    <div>
+        <h4 class="text-center">{{webTitle}}</h4>
+        <ul class="list-group">
+            <span *ngFor="let n of menuList" >
+                <li (click)="select(n.name);" 
+                    [ngClass]="{active: isActive(n.name)}" 
+                    class="nav-group-item"
+                    *ngIf="hasRole(n.role)"
+                    (click)="n.url.length > 0 ? navigateTo(n.url) : null ">
+                    <i class="fa" [ngClass]="n.icon"></i>
+                    <span>{{n.name}}</span>
+                    <small *ngIf="n.secondMeu.length > 0" class="pull-right">
+                        <i class="fa" [ngClass]="isActive(n.name)?'fa-minus':'fa-plus'"></i>
+                    </small>
+                    
+                    <span *ngFor="let child of n.secondMeu">
+                        <ul style="display:none;" class="row p-0 second-list-group" >
+                            <li *ngIf="hasRole(child.role)"
+                                [routerLink]="[child.url]"
+                                (click)="navbarTrigger()"
+                                class="nav-group-item first pl-5">
+                                <i class="fa" [ngClass]="child.icon"></i>
+                                <span>{{ child.name }}</span>
+                                
+                            </li>
+                        </ul>
+                    </span>
+                </li> 
+            </span>
+
+        </ul>
+    </div>
+</nav>

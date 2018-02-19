@@ -1,0 +1,17 @@
+<div class="container-fluid">
+    <div class="row">
+      <div class="mx-auto">
+        <div class="btn-group btn-group-toggle" ngbRadioGroup>
+            <label ngbButtonLabel class="btn-outline-info active">
+              <input ngbButton type="radio" [value]="1" routerLink="/dashboard/patients/index">Index
+            </label>
+            <label ngbButtonLabel class="btn-outline-info">
+              <input ngbButton type="radio" [value]="2" routerLink="/dashboard/patients/add/add">Add
+            </label>
+            <label ngbButtonLabel class="btn-outline-info">
+              <input ngbButton type="radio" [value]="3" routerLink="/dashboard/patients/list">List
+            </label>
+        </div>
+      </div>
+    </div>
+</div>

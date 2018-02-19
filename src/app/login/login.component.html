@@ -1,0 +1,46 @@
+<div class="app-login">
+  <div class="login-box">
+    <!-- <div class="logo text-center">
+      <h2><b>মন</b> ফিজিওথেরাপি</h2>
+      <small>লগ ইন করার জন্য আপনার তথ্য দিন</small>
+    </div> -->
+
+    <div class="offset-md-4 col-md-4 p-0 login-form raised">
+      <div class="card p-0">
+        <div class="logo text-center pt-2">
+          <h2><b>মন</b> ফিজিওথেরাপি</h2>
+        </div>      
+              
+        <div class="card-body">
+          <div class="text-center">
+            Please insert your login information
+          </div>
+          
+          <form [formGroup]="loginForm" (ngSubmit)="login()" novalidate>
+            <mat-form-field>
+                <input matInput placeholder="Email" [(ngModel)]="user.email" formControlName="email">
+                <mat-error *ngIf="loginForm.controls.email.invalid && loginForm.controls.email.touched">Invalid Email</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="password" [(ngModel)]="user.password" formControlName="password" [type]="hide ? 'password' : 'text'">
+                <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+                <mat-error *ngIf="loginForm.controls.password.invalid && loginForm.controls.password.touched">Invalid password touched</mat-error>
+            </mat-form-field>
+            <div class="row mt-3 d-flex justify-content-between">
+              <mat-checkbox formControlName="remember">Remember me!</mat-checkbox>
+              <button type="submit" mat-raised-button color="primary">Submit</button>
+            </div>
+          </form>
+
+          <div class="row mt-3 d-flex justify-content-between">
+              <a routerLink="/register">Register Now!</a>
+              <a routerLink="/register">Forgot Password?</a>
+              <!-- <a routerLink>Register Now</a> -->
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</div>

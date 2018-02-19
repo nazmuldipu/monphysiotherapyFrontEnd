@@ -1,0 +1,117 @@
+<h1 class="text-center">Add patient</h1>
+<form [formGroup]="patientForm" (ngSubmit)="addPatient()" novalidate>
+    <div class="row m-1 raised">
+        <mat-form-field class="col-12 col-sm-6 col-md-3" >
+            <mat-icon matPrefix fontSet="fa" fontIcon="fa-user"></mat-icon>
+            <input matInput placeholder="Name" [(ngModel)]="patient.name" formControlName="name">
+            <mat-error *ngIf="patientForm.controls.name.invalid && patientForm.controls.name.touched">Name Required</mat-error>
+        </mat-form-field>
+        <mat-form-field class="col-12 col-sm-6 col-md-3" >
+            <mat-icon matPrefix fontSet="fa" fontIcon="fa-calendar-plus-o"></mat-icon>
+            <input type="number" matInput placeholder="Age" [(ngModel)]="patient.age" formControlName="age">
+            <mat-error *ngIf="patientForm.controls.age.invalid && patientForm.controls.age.touched">Age invalid</mat-error>
+        </mat-form-field>
+        <mat-form-field class="col-12 col-sm-6 col-md-3" >
+            <mat-icon matPrefix fontSet="fa" fontIcon="fa-mobile"></mat-icon>
+            <input type="tel" matInput placeholder="Phone" [(ngModel)]="patient.phone" formControlName="phone">
+            <mat-error *ngIf="patientForm.controls.phone.invalid && patientForm.controls.phone.touched">Phone invalid</mat-error>
+        </mat-form-field>
+        <mat-form-field class="col-12 col-sm-6 col-md-3" >
+            <mat-icon matPrefix fontSet="fa" fontIcon="fa-calendar"></mat-icon>
+                <input type="date" matInput name="patient.date" [ngModel]="patient.date | date:'yyyy-MM-dd'" (ngModelChange)="dateChanged($event)" formControlName="date"/>
+            <mat-error *ngIf="patientForm.controls.date.invalid && patientForm.controls.date.touched">Date Required</mat-error>
+        </mat-form-field>
+    </div>
+
+    <div class="row m-1 mt-3">
+        <div class="col-md-4 raised">
+            <mat-form-field class="col-12" >
+                <mat-icon matPrefix fontSet="fa" fontIcon="fa-wheelchair"></mat-icon>
+                <input matInput placeholder="Chief Complain" [(ngModel)]="patient.chiefComplain" formControlName="chiefComplain">
+            </mat-form-field>
+            <mat-form-field class="col-12" >
+                <mat-icon matPrefix fontSet="fa" fontIcon="fa-history"></mat-icon>
+                <input matInput placeholder="Past History" [(ngModel)]="patient.pastHistory" formControlName="pastHistory">
+            </mat-form-field>
+            <mat-form-field class="col-12" >
+                <mat-icon matPrefix fontSet="fa" fontIcon="fa-plus-square"></mat-icon>
+                <input matInput placeholder="Past Medical History" [(ngModel)]="patient.pastMedicalHistory" formControlName="pastMedicalHistory">
+            </mat-form-field>
+            <mat-form-field class="col-12" >
+                <input matInput placeholder="On Examination" [(ngModel)]="patient.onExaminaton" formControlName="onExaminaton">
+            </mat-form-field>
+            <mat-checkbox [(ngModel)]="patient.tender" formControlName="tender">Tender</mat-checkbox>
+            <mat-checkbox class="col-12" [(ngModel)]="patient.soiling" formControlName="soiling">Soiling</mat-checkbox>
+            <mat-checkbox class="col-12" [(ngModel)]="patient.redness" formControlName="redness">Redness</mat-checkbox>
+            
+        </div>
+        <div class="col-md-8 p-0">
+            <div class="ml-md-1 mr-0 mt-2 mt-md-0 p-2 raised">
+                <div class="d-flex flex-row-reverse text-primary-color" >
+                    <a class="btn btn-info btn-sm  raised" (click)="addTreatments()" > 
+                        <i class="fa fa-plus"></i> Add Treatments
+                    </a> 
+                </div>
+                <div formArrayName="treatments">
+                    <mat-form-field class="col-12" *ngFor="let treatment of treatments.controls; index as i">
+                        <mat-icon matPrefix fontSet="fa" fontIcon="fa-plus-square"></mat-icon>
+                        <input matInput [(ngModel)]="patient.treatments[i]" [formControlName]="i" placeholder="Treatment {{i+1}}">
+                    </mat-form-field>
+                </div>
+
+                <div class="d-flex flex-row-reverse text-primary-color" >
+                    <a class="btn btn-info btn-sm  raised" (click)="addAdvices()" > 
+                        <i class="fa fa-plus"></i> Add Advices
+                    </a> 
+                </div>
+                <div formArrayName="advices">
+                    <mat-form-field class="col-12" *ngFor="let advice of advices.controls; index as i">
+                        <mat-icon matPrefix fontSet="fa" fontIcon="fa-pencil-square"></mat-icon>
+                        <input matInput [formControlName]="i" placeholder="Advice {{i+1}}">
+                    </mat-form-field>
+                </div>
+
+                <div class="d-flex flex-row-reverse text-primary-color" >
+                    <a class="btn btn-info btn-sm  raised" (click)="addRequiredTests()" > 
+                        <i class="fa fa-plus"></i> Add Advices
+                    </a> 
+                </div>
+                <div formArrayName="requiredTests">
+                    <mat-form-field class="col-12" *ngFor="let requiredTest of requiredTests.controls; index as i">
+                        <mat-icon matPrefix fontSet="fa" fontIcon="fa-thermometer-full"></mat-icon>
+                        <input matInput [formControlName]="i" placeholder="RequiredTest {{i+1}}">
+                    </mat-form-field>
+                </div>
+
+                <div class="d-flex flex-row-reverse text-primary-color" >
+                    <a class="btn btn-info btn-sm  raised" (click)="addMedications()" > 
+                        <i class="fa fa-plus"></i> Add Advices
+                    </a> 
+                            <!-- <a (click)="addMedications()" mat-raised-button color="accent">Add Medications</a> -->
+                </div>
+                <div formArrayName="medications">
+                    <mat-form-field class="col-12" *ngFor="let medication of medications.controls; index as i">
+                        <mat-icon matPrefix fontSet="fa" fontIcon="fa-medkit"></mat-icon>
+                        <input matInput [formControlName]="i" placeholder="Medication {{i+1}}">
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row m-1 mt-3 raised">
+        <mat-form-field class="col-12 col-sm-6" >
+            <mat-icon matPrefix fontSet="fa" fontIcon="fa-money"></mat-icon>
+            <input matInput placeholder=" Prescription Fee" [(ngModel)]="patient.prescribeFee" formControlName="prescribeFee">
+        </mat-form-field>
+        <mat-form-field class="col-12 col-sm-6" >
+            <mat-icon matPrefix fontSet="fa" fontIcon="fa-money"></mat-icon>
+            <input matInput placeholder=" Session Fee" [(ngModel)]="patient.sessionFee" formControlName="sessionFee">
+        </mat-form-field>
+    </div>
+    <div class="row m-1 mt-3">
+        <div class="offset-md-3 col-md-6">
+            <a mat-raised-button color="basic" routerLink="/dashboard/patients/index"><i class="fa fa-times"></i>Cancel</a>
+            <button type="submit" mat-raised-button color="primary" disabled="{{patientForm.invalid}}"><i class="fa fa-send"></i>Save</button>
+        </div>
+    </div>
+</form>

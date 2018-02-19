@@ -1,0 +1,20 @@
+<!-- <button type="button" class="btn btn-outline-info btn-sm" routerLink="/employees/index">Index</button>
+<button type="button" class="btn btn-outline-info btn-sm" routerLink="/employees/add/add">Add</button>
+<button type="button" class="btn btn-outline-info btn-sm" routerLink="/employees/list">List</button> -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="mx-auto">
+      <div class="btn-group btn-group-toggle" ngbRadioGroup>
+          <label ngbButtonLabel class="btn-outline-info active">
+            <input ngbButton type="radio" [value]="1" routerLink="/dashboard/employees/index">Index
+          </label>
+          <label ngbButtonLabel class="btn-outline-info">
+            <input ngbButton type="radio" [value]="2" routerLink="/dashboard/employees/add/add">Add
+          </label>
+          <label ngbButtonLabel class="btn-outline-info">
+            <input ngbButton type="radio" [value]="3" routerLink="/dashboard/employees/list">List
+          </label>
+      </div>
+    </div>
+  </div>
+</div>

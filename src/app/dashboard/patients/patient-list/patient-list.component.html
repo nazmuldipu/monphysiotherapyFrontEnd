@@ -1,0 +1,69 @@
+
+<div class="col-12 mt-1">
+  <div class="raised p-3">
+    <h5 class="text-center">Patient List </h5>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Name</th>
+          <th>Phone</th>
+          <th>Balance</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let patient of patients">
+          <td>{{patient.date | date:'dd-MM-yyyy'}}</td>
+          <td>
+            <a routerLink="/dashboard/patients/details/{{patient.id}}">
+              {{patient?.name}}
+            </a>
+          </td>
+          <td>{{patient?.phone}}</td>
+          <td>{{patient?.balance}}</td>
+          <td>
+              <a class="btn btn-warning btn-sm raised" 
+              routerLink="/dashboard/patients/add/edit/{{patient.id}}">
+                  <i class="fa fa-pencil-square-o"></i>
+              </a> 
+              <button class="btn btn-danger btn-sm raised" color="warn" 
+                  (click)="deletePatient(patient.id)">
+                  <i class="fa fa-trash-o"></i> 
+            </button> 
+          </td>
+        </tr>
+        <tr *ngFor="let i of arr(10 - page?.numberOfElements)" >
+            <td colspan="5">
+                <a class="btn btn-sm">
+                    &nbsp;
+                </a> 
+            </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td>
+              <a class="btn btn-primary btn-sm raised" 
+              routerLink="/dashboard/patients/add/add">
+                  <i class="fa fa-plus"></i> Add
+              </a> 
+          </td>
+          <td colspan="4">
+            <div aria-label="Page navigation example">
+              <ul class="pagination justify-content-end">
+                <li class="page-item" [ngClass]="{'disabled': page?.first}" ><a class="page-link" [routerLink] (click)="getPatinetPage(0)" > First </a></li>
+                <li class="page-item" [ngClass]="{'disabled': page?.number == 0}" ><a class="page-link" [routerLink] (click)="getPatinetPage(page?.number-1)" > Previous </a></li>
+
+                <li class="page-item"><a class="page-link" > {{page?.number+1}} / {{page?.totalPages}} </a></li>
+
+                <li class="page-item" [ngClass]="{'disabled': page?.last}"><a class="page-link" [routerLink] (click)="getPatinetPage(page?.number+1)"> Next </a></li>
+                <li class="page-item" [ngClass]="{'disabled': page?.last}"><a class="page-link" [routerLink] (click)="getPatinetPage(page?.totalPages-1)"> Last </a></li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>

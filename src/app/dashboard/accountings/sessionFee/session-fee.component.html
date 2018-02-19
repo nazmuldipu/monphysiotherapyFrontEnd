@@ -1,0 +1,101 @@
+<div class="row">
+    <div class="col-12 col-md-6 mt-1">
+      <div class="raised p-2">
+        <h4 class="text-center">Patient List </h4>
+        <table class="table m-0">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Balance</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="patients.length > 0">
+            <tr *ngFor="let patient of patients">
+              <td>{{patient?.name}}</td>
+              <td>{{patient?.phone}}</td>
+              <td>{{patient?.balance}}</td>
+              <td>
+                  <!-- <a class="btn btn-info btn-sm raised" 
+                    routerLink="/dashboard/sessions/add/add/{{patient.id}}">
+                  <i class="fa fa-calendar-plus-o"></i>
+                  </a> -->
+                  <button class="btn btn-info btn-sm raised" color="warn" 
+                      (click)="addSessionFee(patient.id)">
+                      <i class="fa fa-calendar-plus-o"></i>
+                </button> 
+              </td>
+            </tr>
+            
+            <tr *ngFor="let i of arr(patientPage?.size - patientPage?.numberOfElements)" >
+                <td colspan="5">
+                    <a class="btn btn-sm">
+                        &nbsp;
+                    </a> 
+                </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td><a class="btn btn-info btn-small" [routerLink] (click)="getPatinetPage()">Reload</a></td>
+              <td colspan="3">
+                <div aria-label="Page navigation example">
+                  <ul class="pagination justify-content-end m-0">
+                    <li class="page-item" [ngClass]="{'disabled': patientPage?.first}" ><a class="page-link" [routerLink] (click)="getPatinetPage(0)" > First </a></li>
+                    <li class="page-item" [ngClass]="{'disabled': patientPage?.number == 0}" ><a class="page-link" [routerLink] (click)="getPatinetPage(patientPage?.number-1)" > Previous </a></li>
+  
+                    <li class="page-item"><a class="page-link" > {{patientPage?.number+1}} / {{patientPage?.totalPages}} </a></li>
+  
+                    <li class="page-item" [ngClass]="{'disabled': patientPage?.last}"><a class="page-link" [routerLink] (click)="getPatinetPage(patientPage?.number+1)"> Next </a></li>
+                    <li class="page-item" [ngClass]="{'disabled': patientPage?.last}"><a class="page-link" [routerLink] (click)="getPatinetPage(patientPage?.totalPages-1)"> Last </a></li>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+    
+    <div class="col-12 col-md-6 mt-1">
+        <div class="raised p-3">
+          <h4 class="text-center">Colloet Session Fee</h4>
+          <div class="alert alert-success" role="alert" *ngIf="message.length>0">
+            <strong>{{message}}</strong>
+          </div>
+          <div class="alert alert-success" role="alert" *ngIf="errMessage.length>0">
+            <strong>{{errMessage}}</strong>
+          </div>
+          <form [formGroup]="pledgerForm" (ngSubmit)="saveSessionFee()" novalidate>
+              <mat-form-field class="col-6" >
+                    <mat-icon matPrefix fontSet="fa" fontIcon="fa-calendar"></mat-icon>
+                    <input type="date" matInput name="pledger.date" [ngModel]="pledger.date | date:'yyyy-MM-dd'" (ngModelChange)="dateChanged($event)" formControlName="date"/>
+                    <mat-error *ngIf="pledgerForm.controls.date.invalid && pledgerForm.controls.date.touched">Date Required</mat-error>
+              </mat-form-field>
+
+              <mat-form-field class="col-12" >
+                  <mat-icon matPrefix fontSet="fa" fontIcon="fa-user"></mat-icon>
+                  <input matInput placeholder="Name" [(ngModel)]="pledger.patient.name" formControlName="name">
+              </mat-form-field>
+    
+              <mat-form-field class="col-12" >
+                  <mat-icon matPrefix fontSet="fa" fontIcon="fa-bullhorn"></mat-icon>
+                  <input matInput placeholder="Explanation" [(ngModel)]="pledger.explanation" formControlName="explanation">
+                  <mat-error *ngIf="pledgerForm.controls.explanation.invalid && pledgerForm.controls.explanation.touched">Explanation invalid</mat-error>
+              </mat-form-field>
+              <mat-form-field class="col-12" >
+                  <mat-icon matPrefix fontSet="fa" fontIcon="fa-money"></mat-icon>
+                  <input type="number" matInput placeholder="Amount" [(ngModel)]="pledger.credit" formControlName="credit">
+                  <mat-error *ngIf="pledgerForm.controls.credit.invalid && pledgerForm.controls.credit.touched">Amount invalid</mat-error>
+              </mat-form-field>
+              
+            <div class="row mx-3 d-flex justify-content-between">
+                <a class="btn btn-secondary" routerLink="/dashboard/patients/list"><i class="fa fa-undo"></i>Patient list</a>
+                <button class="btn btn-primary" [ngClass]="{'disabled': pledgerForm.invalid }" type="submit" ><i class="fa fa-send"></i>Save</button>
+            </div> 
+          </form>
+    
+        </div>
+    </div>
+</div>
