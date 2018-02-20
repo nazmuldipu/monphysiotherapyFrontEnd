@@ -50,7 +50,6 @@ const appRoutes: Routes = [
     RegisterComponent
   ],
   imports: [
-    // CommonModule,
     FormsModule ,
     HttpModule,
     BrowserModule,

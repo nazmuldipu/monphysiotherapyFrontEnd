@@ -146,6 +146,11 @@ export class SideNavbarComponent {
             'role': 'ADMIN',
           },
           {
+            'name': 'Add',
+            'icon': 'fa-plus',
+            'url': '/dashboard/sessions/add/add'
+          },
+          {
             'name': 'List',
             'icon': 'fa-list',
             'url': '/dashboard/sessions/list'

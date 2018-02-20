@@ -15,14 +15,14 @@
             <td>{{patient?.name}}</td>
             <td>{{patient?.phone}}</td>
             <td>
-                <a class="btn btn-info btn-sm raised" 
+                <!-- <a class="btn btn-info btn-sm raised" 
                   routerLink="/dashboard/sessions/add/add/{{patient.id}}">
                 <i class="fa fa-calendar-plus-o"></i>
-                </a>
-                <!-- <button class="btn btn-info btn-sm raised" color="warn" 
-                    (click)="addSession(patient.id)">
-                    <i class="fa fa-calendar-plus-o"></i>
-              </button>  -->
+                </a> -->
+                <button class="btn btn-info btn-sm raised" color="warn" 
+                    (click)="sessionList(patient.id)">
+                    <i class="fa fa-history"></i>
+              </button> 
             </td>
           </tr>
           
@@ -82,7 +82,7 @@
         </tbody>
         <tfoot>
           <tr>
-            <td><a class="btn btn-info btn-small" [routerLink] (click)="getPSessionsPage()">Reload</a></td>
+            <td><a class="btn btn-info btn-small" routerLink="/dashboard/sessions/add/add" >Add Session</a></td>
             <td colspan="3">
               <div aria-label="Page navigation example">
                 <ul class="pagination justify-content-end m-0">

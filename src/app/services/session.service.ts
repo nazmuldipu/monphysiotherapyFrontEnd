@@ -18,7 +18,6 @@ export class PSessionService {
     constructor(private dataSource: RestDataSource,
         // private toastr: ToastrService,
         private router: Router) {
-        this.getSessionPage();
     }
     
     getPage(): any {
@@ -51,6 +50,10 @@ export class PSessionService {
     getPatientSessionPage(pId: number, pageNumber: number = null): Observable<any>{
         const pageUrl = pageNumber == null ? '' : 'page=' + pageNumber + '&';
         return this.dataSource.sendRequest(RequestMethod.Get, this.serviceUrl + `/patient/${pId}`, null , true, pageUrl);
+    }
+
+    getPatientLastSession(pId: number):Observable<PSession>{
+        return this.dataSource.sendRequest(RequestMethod.Get, this.serviceUrl+`/patientLast/${pId}`, null, true, null);
     }
     
     savePSession(pId: number, psession: PSession): Observable<any> {

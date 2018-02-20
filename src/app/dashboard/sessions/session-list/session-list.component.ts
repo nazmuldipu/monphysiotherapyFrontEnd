@@ -12,7 +12,10 @@ import { Patient } from '../../../models/patient.model';
 export class SessionListComponent implements OnInit {
   arr = Array;
   patient: Patient;
-  
+  psessions: PSession[] = [];
+  psessionPage: any;
+  pId: number;
+
   constructor(private sessionService: PSessionService,
     private patientService: PatientService) {
     
@@ -34,17 +37,31 @@ export class SessionListComponent implements OnInit {
     this.patientService.getPatientPage(pageNumber);
   }
   
-  // Getting Sessions informations---------------------------------------------------
-  get psessions(): PSession[]{
-    return this.sessionService.getSessions();
-  }
-
-  get psessionPage(){
-    return this.sessionService.getPage();
-  }
-
+  // Getting Patinet Sessions History--------------------------------------------------
   getPSessionsPage(pageNumber: number = null){
-    console.log(pageNumber);
-    this.sessionService.getSessionPage(pageNumber);
+    this.sessionService.getPatientSessionPage(this.pId, pageNumber)
+    .subscribe(
+      data => {
+        this.psessions = data.content;
+        this.psessionPage = data;
+      },
+      error =>{
+        console.log('Patient session loading error');
+      }
+    );
+  }
+
+  sessionList(id:number, pageNumber: number = null){
+    this.pId = id;
+    this.sessionService.getPatientSessionPage(id)
+    .subscribe(
+      data => {
+        this.psessions = data.content;
+        this.psessionPage = data;
+      },
+      error =>{
+        console.log('Patient session loading error');
+      }
+    );
   }
 }

@@ -11,6 +11,7 @@ export class Patient {
         public onExaminaton?: string,
         public soiling?: boolean,
         public redness?: boolean,
+        public tender?: boolean,
         public movement?: string,
         public rom?: string,
         public prescribeFee?: number,

@@ -13,13 +13,11 @@ import { PSessionService } from '../../../services/session.service';
 })
 export class AddSessionComponent implements OnInit {
   arr = Array;
-  pId: number;
   sessionForm: FormGroup;
   session: PSession;
-  
-  // patient: Patient
-  sessions: PSession[];
-  sessionPage: any;
+  patient: Patient;
+  message = '';
+  errMessage= '';
 
   constructor(
     private builder: FormBuilder,
@@ -27,29 +25,13 @@ export class AddSessionComponent implements OnInit {
     private sessionService : PSessionService,
     private activeRoute: ActivatedRoute) { 
 
-      this.pId = activeRoute.snapshot.params['pId'];
       this.session = new PSession();
       // sessionService.getPSessionPage(this.pId, null);
       this.createForm();
-      this.getPatientSessions();
+
   }
 
   ngOnInit() {
-  }
-
-  get patient(): Patient{
-    return this.patientService.getPatient(this.pId);
-  }
-
-  getPatientSessions(pageNumber: number = null){
-    this.sessionService.getPatientSessionPage(this.pId, pageNumber)
-      .subscribe(
-        data => {
-          this.sessions = data.content;
-          this.sessionPage = data;
-          this.getLastSession();
-        }
-      )
   }
 
   createForm() {
@@ -61,14 +43,63 @@ export class AddSessionComponent implements OnInit {
     });
   }
 
-  getLastSession(){
-    if(this.sessions.length > 0){
-      const lastSession = this.sessions[this.sessions.length -1 ];
-      // this.session.date = new Date();
-      this.session.treatments = lastSession.treatments;
-      this.session.sessionFee = lastSession.sessionFee;
-    }
+  // Getting patient informations---------------------------------------------------
+  get patients(){
+    return this.patientService.getPatients();
   }
+
+  get patientPage(){
+    return this.patientService.getPage();
+  }
+
+  getPatinetPage(pageNumber: number = null) {
+    this.patientService.getPatientPage(pageNumber);
+  }
+
+
+  // Add patient info into form
+  addSession(id){
+    this.patient = this.patientService.getPatient(id);
+    this.getPatientLastSession(id);
+  }
+
+  getPatientLastSession(pId: number){
+    this.sessionService.getPatientLastSession(pId)
+    .subscribe(
+      data => {
+        this.session.treatments = data.treatments;
+        this.session.sessionFee = data.sessionFee;
+      },
+      error => console.log('Last session loading error ' + error.status)
+    );
+  }
+
+
+  // get patient(): Patient{
+  //   return this.patientService.getPatient(this.pId);
+  // }
+
+  // getPatientSessions(pageNumber: number = null){
+  //   this.sessionService.getPatientSessionPage(this.pId, pageNumber)
+  //     .subscribe(
+  //       data => {
+  //         this.sessions = data.content;
+  //         this.sessionPage = data;
+  //         this.getLastSession();
+  //       }
+  //     )
+  // }
+
+  
+
+  // getLastSession(){
+  //   if(this.sessions.length > 0){
+  //     const lastSession = this.sessions[this.sessions.length -1 ];
+  //     // this.session.date = new Date();
+  //     this.session.treatments = lastSession.treatments;
+  //     this.session.sessionFee = lastSession.sessionFee;
+  //   }
+  // }
 
   dateChanged(newDate) {
     if(newDate != null){
@@ -79,16 +110,19 @@ export class AddSessionComponent implements OnInit {
 
   saveSession(){
     if(this.sessionForm.valid){
-      this.sessionService.savePSession(this.pId, this.session)
+      this.sessionService.savePSession(this.patient.id, this.session)
         .subscribe(
               data => {
-                  this.sessions.push(data);
+                  this.message = 'Session Saved'
               },
               error => {
+                this.errMessage = 'Error, Session could not saved' + error.status;
                   console.log('Session saveing operation failed ');
               }
           );
     }
   }
+
+  
 
 }

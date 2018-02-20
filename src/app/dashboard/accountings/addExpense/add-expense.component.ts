@@ -12,13 +12,15 @@ export class AddExpenseComponent implements OnInit {
   arr = Array;
   cashbookForm: FormGroup;
   cashbook: Cashbook;
+  // message= '';
+  // errMessage = '';
 
   constructor(
     private builder: FormBuilder,
-    private accountingService: AccountingService
-  ) {
+    private accountingService: AccountingService) {
+
     this.cashbook = new Cashbook();
-    this.getCashbookPage();
+    this.createForm();
   }
 
   ngOnInit() {
@@ -39,15 +41,30 @@ export class AddExpenseComponent implements OnInit {
   get page(): any{
     return this.accountingService.getPage();
   }
+
+  get message(): string{
+    return this.accountingService.getMessage();
+  }
+
+  get errMessage(): string{
+    return this.accountingService.getErrorMessage();
+  }
   
   getCashbookPage(pageNumber: number = null){
     this.accountingService.getCashBookPage(pageNumber);
   }
 
   saveExpense(){
-    console.log(this.cashbook);
-    console.log(this.cashbookForm);
-    console.log(this.cashbookForm.valid);
+    if(this.cashbookForm.valid){
+      this.accountingService.saveCashbook(this.cashbook);
+    }
+  }
+
+  dateChanged(newDate) {
+    if(newDate != null){
+      newDate = new Date(newDate);
+      this.cashbook.date = newDate.getTime();
+    }
   }
 
 }

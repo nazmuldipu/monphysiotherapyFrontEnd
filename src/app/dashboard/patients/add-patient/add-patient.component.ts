@@ -38,7 +38,7 @@ export class AddPatientComponent implements OnInit {
       pastHistory: '',
       pastMedicalHistory: '',
       onExaminaton: '',
-      tender: '',
+      tender: false,
       soiling: false,
       redness: false,
       treatments: new FormArray([new FormControl('')]),
@@ -94,7 +94,7 @@ export class AddPatientComponent implements OnInit {
   }
 
   // this method to set patient date value
-  private dateChanged(newDate) {
+  dateChanged(newDate) {
     if(newDate != null){
       newDate = new Date(newDate);
       this.patient.date = newDate.getTime();

@@ -1,5 +1,6 @@
 
 <div class="container">
+    <div class="row">
     <div class="col-12 col-md-6 mt-1">
         <div class="container raised ">
             <h4 class="text-center">Cash Book</h4>
@@ -46,5 +47,42 @@
                 </tfoot>
             </table>
         </div>
+    </div>
+    
+    <div class="col-12 col-md-6 mt-1">
+        <div class="raised p-3">
+            <h4 class="text-center">Add Expense</h4>
+            <div class="alert alert-success" role="alert" *ngIf="message?.length>0">
+                <strong>{{message}}</strong>
+            </div>
+            <div class="alert alert-success" role="alert" *ngIf="errMessage?.length>0">
+                <strong>{{errMessage}}</strong>
+            </div>
+            <form [formGroup]="cashbookForm" (ngSubmit)="saveExpense()" novalidate>
+                <mat-form-field class="col-6" >
+                    <mat-icon matPrefix fontSet="fa" fontIcon="fa-calendar"></mat-icon>
+                    <input type="date" matInput name="cashbook.date" [ngModel]="cashbook.date | date:'yyyy-MM-dd'" (ngModelChange)="dateChanged($event)" formControlName="date"/>
+                    <mat-error *ngIf="cashbookForm.controls.date.invalid && cashbookForm.controls.date.touched">Date Required</mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="col-12" >
+                    <mat-icon matPrefix fontSet="fa" fontIcon="fa-bullhorn"></mat-icon>
+                    <input matInput placeholder="Explanation" [(ngModel)]="cashbook.explanation" formControlName="explanation">
+                    <mat-error *ngIf="cashbookForm.controls.explanation.invalid && cashbookForm.controls.explanation.touched">Explanation invalid</mat-error>
+                </mat-form-field>
+                <mat-form-field class="col-12" >
+                    <mat-icon matPrefix fontSet="fa" fontIcon="fa-money"></mat-icon>
+                    <input type="number" matInput placeholder="Amount" [(ngModel)]="cashbook.credit" formControlName="credit">
+                    <mat-error *ngIf="cashbookForm.controls.credit.invalid && cashbookForm.controls.credit.touched">Amount invalid</mat-error>
+                </mat-form-field>
+                
+            <div class="row mx-3 d-flex justify-content-between">
+                <a class="btn btn-secondary" routerLink="/dashboard/patients/list"><i class="fa fa-undo"></i>Patient list</a>
+                <button class="btn btn-primary" [ngClass]="{'disabled': cashbookForm.invalid }" type="submit" ><i class="fa fa-send"></i>Save</button>
+            </div> 
+            </form>
+    
+        </div>
+    </div>
     </div>
 </div>

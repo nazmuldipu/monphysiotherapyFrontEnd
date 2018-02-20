@@ -17,7 +17,7 @@ const routing = RouterModule.forChild([
       children: [
           { path: 'index', component: IndexComponent },
           { path: 'add/:mode/:pId/:id', component: AddSessionComponent },
-          { path: 'add/:mode/:pId', component: AddSessionComponent },
+          { path: 'add/:mode', component: AddSessionComponent },
           { path: 'list', component: SessionListComponent },
 
           { path: '**', redirectTo: 'sessions/index' }

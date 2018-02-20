@@ -13,7 +13,6 @@ export class CashbookComponent implements OnInit {
 
 
   constructor(private accountingService: AccountingService) { 
-    this.getCashbookPage();
   }
 
   ngOnInit() {
