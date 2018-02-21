@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { User } from '../models/user.model';
 import { RestDataSource } from '../services/rest.datasource';
+import { PasswordValidation } from './password.validation';
+import { RequestMethod } from '@angular/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -15,6 +18,7 @@ export class RegisterComponent implements OnInit {
   user: User;
 
   constructor(
+    private router: Router,
     private builder: FormBuilder,
     private dataSource: RestDataSource) {
 
@@ -33,15 +37,26 @@ export class RegisterComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(5) ] ],
       confirmPassword: ['', [Validators.required] ],
       terms: ['', Validators.requiredTrue]
+    },
+    {
+      validator: PasswordValidation.MatchPassword // your validation method
     });
   }
 
   register() {
-    console.log(this.registerForm);
-    console.log(this.registerForm.valid);
-
+    console.log(this.user);
     if (this.registerForm.valid) {
-      console.log(this.user);
+      this.dataSource.sendRequest(RequestMethod.Post, '/register',this.user,false,null)
+      .subscribe(
+        data => {
+          console.log(data.statusText);
+          this.router.navigateByUrl('/login');
+        },
+        error => {
+          console.log(error.status);
+          this.router.navigateByUrl('/login');
+        }
+      )
       
     }
   }

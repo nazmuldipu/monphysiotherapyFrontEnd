@@ -74,33 +74,6 @@ export class AddSessionComponent implements OnInit {
     );
   }
 
-
-  // get patient(): Patient{
-  //   return this.patientService.getPatient(this.pId);
-  // }
-
-  // getPatientSessions(pageNumber: number = null){
-  //   this.sessionService.getPatientSessionPage(this.pId, pageNumber)
-  //     .subscribe(
-  //       data => {
-  //         this.sessions = data.content;
-  //         this.sessionPage = data;
-  //         this.getLastSession();
-  //       }
-  //     )
-  // }
-
-  
-
-  // getLastSession(){
-  //   if(this.sessions.length > 0){
-  //     const lastSession = this.sessions[this.sessions.length -1 ];
-  //     // this.session.date = new Date();
-  //     this.session.treatments = lastSession.treatments;
-  //     this.session.sessionFee = lastSession.sessionFee;
-  //   }
-  // }
-
   dateChanged(newDate) {
     if(newDate != null){
       newDate = new Date(newDate);
