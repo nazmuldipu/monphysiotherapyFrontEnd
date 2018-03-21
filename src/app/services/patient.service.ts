@@ -74,7 +74,7 @@ export class PatientService {
             this.dataSource.sendRequest(RequestMethod.Put, this.serviceUrl+`/${patient.id}`, patient, true, null)
             .subscribe(
                 data => {
-                    this.patients.splice(this.patients .findIndex(p => this.locator(p, patient.id)), 1, patient);
+                    this.patients.splice(this.patients.findIndex(p => this.locator(p, patient.id)), 1, patient);
                     this.router.navigateByUrl('/dashboard/patients/list');
                     console.log( 'Patient updated');
                 },
